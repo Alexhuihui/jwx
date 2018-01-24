@@ -1,0 +1,113 @@
+<?php
+    life();
+?>
+<!DOCTYPE HTML>
+<head>
+    <title>编辑净水器</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="<?php echo base_url('css/user_edit.css')?>">
+    <script type="text/javascript" src="<?php echo base_url('js/jquery-3.2.0.js')?>"></script>
+    <link rel="stylesheet" href="<?php echo base_url('css/bootstrap.css')?>">
+    <script type="text/javascript" src="<?php echo base_url('js/formcheck.js')?>"></script>
+</head>
+<body>
+<script>
+    function checkexist()
+    {
+        var machinenamedata = $.trim($("#machinename").val());
+        var machinename={"machinename":machinenamedata};
+//       ""里填写希望请求的 URL
+        $.post("../../background/machine/upload_unique",machinename,function (data)
+        {
+            var json = JSON.parse(data);
+            var flag = json.exist;
+            console.log("data  "+flag);
+
+                if(flag==1)
+                {
+                    $("#inexistence").css("display","block");
+                }
+                else
+                {
+                    $("#inexistence").css("display","none");
+                }
+        });
+
+    }
+
+    window.onload = function()
+    {
+        formblur("machinename","value.length<2 || value.length>20");
+
+        $("#formsubmit").submit(function()
+        {
+            isempty("machinename");
+            aftersubmit("machinename","v.length<2 || v.length>20");
+            var err1 = $("#machinenameerror").css("display");
+            var err2 = $("#inexistence").css("display");
+            if(err1=="block"||err2=="block")
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        });
+    }
+
+
+</script>
+<div class="admintop">
+    <span><img src="<?php echo base_url('images/login/Hunsdon.png')?>" alt="logo" width="60%" height="60%"></span>
+    <ul>
+        <li><a href="./funcAction?tag=update&people=${sessionScope.username}">欢迎你,admin</a></li>
+        <li><a href="./funcAction?tag=exit">安全退出</a></li>
+    </ul>
+</div>
+<div class="admincenter">
+    <div class="adminNavigation sidebar">
+        <dl>
+            <dd>
+                <div class="title"><a id="system" href="<?php  echo site_url('background/user_operate/display');?>" >用户管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/order_operate/display');?>">订单管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/machine/display');?>" >净水机型号管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/filter/display');?>" >净水机滤芯管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/article/display');?>" >文章管理</a></div>
+            </dd>
+        </dl>
+    </div>
+    <!--<div class="admintable">-->
+    <div class="adminTableCen">
+        <div class="admintable">
+            <?php echo form_open_multipart('background/machine/create' , array('method' => 'post','id' => 'formsubmit'))?>
+            <table class="dateTable" id="check">
+                <tr>
+                    <td><label>净水器名</label></td>
+                    <td>
+                        <input type="text" name="machinename" id="machinename" value="<?php echo set_value('machinename')?>" oninput="checkexist();">
+                        <?php echo form_error('machinename')?>
+                        <span id="machinenameerror" class="233" style="display: none;">净水器名正确格式为：长度大于2，小于20</span>
+                        <span id="inexistence" style="display: none;">这个型号的净水器已存在</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" value="提交"></td>
+                </tr>
+            </table>
+            </form>
+        </div>
+    </div>
+    <!--<div class="adminbm">版权所有Copyright © 2017 All Rights Reserved. 灵山乐嘉教育有限公司</div>-->
+</body>
+</html>
+

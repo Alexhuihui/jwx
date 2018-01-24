@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>欢迎登录</title>
+    <link rel="stylesheet" href="<?php echo base_url('css/bootstrap.min.css')?>">
+    <link rel="stylesheet" href="<?php echo base_url('css/login.css')?>">
+    <script type="text/javascript" src="<?php echo base_url('js/jquery-3.2.0.js')?>"></script>
+    <script type="text/javascript" src="<?php echo base_url('js/bootstrap.js')?>"></script>
+    <script type="text/javascript" src="<?php echo base_url('js/cloud.js')?>"></script>
+    <script type="text/javascript" src="<?php echo base_url('js/formcheck.js')?>"></script>
+    <script type="text/javascript" language="javascript">
+        $(function()
+        {
+            $('.loginbox').css({'position':'absolute','left':($(window).width()-692)/2});
+            $(window).resize(function(){
+                $('.loginbox').css({'position':'absolute','left':($(window).width()-692)/2});
+                var loginbm = document.body.scrollHeight-50;
+                var loginbmWidth = document.body.scrollWidth;
+                $(".loginbm").css({'position':'absolute','top':loginbm,'width':loginbmWidth});
+                $(".logintop").css({'position':'absolute','width':loginbmWidth});
+            });
+
+        });
+        window.onbeforeunload = function()
+        {
+            $('.loginbox').css({'position':'absolute','left':($(window).width()-692)/2});
+            var loginbm = document.body.scrollHeight-50;
+            var loginbmWidth = document.body.scrollWidth;
+            $(".loginbm").css({'position':'absolute','top':loginbm,'width':loginbmWidth});
+            $(".logintop").css({'position':'absolute','width':loginbmWidth});
+            return ;
+        };
+
+        window.onload = function ()
+        {
+            formblur("telnum","(value.length>0 && value.length != 11) || patrn.exec(value) == null");
+            formblur("passwd","value.length==0");
+
+            $("#formsubmit").click(function()
+            {
+                isempty("telnum");
+                isempty("passwd");
+                aftersubmit("telnum","(v.length>0 && v.length != 11) || patrn.exec(v) == null");
+                var err1 = $("#telnumerror").css("display");
+                var err2 = $("#passwderror").css("display");
+                if(err1=="block"||err2=="block")
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            });
+        }
+
+
+    </script>
+</head>
+<body>
+<div id="mainBody">
+    <div id="cloud1" class="cloud"></div>
+    <div id="cloud2" class="cloud"></div>
+</div>
+<div class="logintop">
+    <span>欢迎登录后台管理界面平台</span>
+</div>
+<div class="loginbody">
+    <span class="systemlogo"></span>
+    <div class="loginbox">
+        <ul>
+            <form id="loginAction" name="loginAction" action="<?php echo site_url('background/login/login')?>" method="post" autocomplete="off" >
+                <li>
+                    <input  type="text" placeholder="手机" name="telnum" id="telnum" value="<?php echo set_value('telnum');?>" class="loginuser"/>
+                    <span id="telnumerror" style="display: none;">电话号码正确格式为：长度为11位，只能为数字</span>
+                </li>
+                <!--错误信息-->
+                <!--<?php   echo form_error('telnum', '<span>', '</span>');?>-->
+                <li>
+                    <input type="password" name="passwd" id="passwd" value="<?php   echo set_value('passwd');?>" placeholder="密码" class="loginpwd"/>
+                    <span id="passwderror" style="display: none;width:345px;">密码不能为空</span>
+                </li>
+                <!--<?php   echo form_error('passwd', '<span>', '</span>');?>-->
+                <li style="text-align: center;width: 345px;">
+                    <button type="submit" name="tag" value="login" class="loginbtn1" id="formsubmit" >登录</button>
+                </li>
+            </form>
+        </ul>
+    </div>
+</div>
+<!--<div class="loginbm">版权所有Copyright © 2017 All Rights Reserved.</div>-->
+</body>
+</html>

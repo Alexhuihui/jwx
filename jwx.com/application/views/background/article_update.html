@@ -1,0 +1,241 @@
+<?php
+    life();
+?>
+<!DOCTYPE HTML>
+<head>
+    <title>修改文章</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="<?php echo base_url('css/user_edit.css')?>">
+    <script type="text/javascript" src="<?php echo base_url('js/jquery-3.2.0.js')?>"></script>
+    <script type="text/javascript" src="<?php echo base_url('js/bootstrap.js')?>"></script>
+    <script type="text/javascript" src="<?php echo base_url('js/formcheck.js')?>"></script>
+    <link rel="stylesheet" href="<?php echo base_url('css/bootstrap.css')?>">
+    <link rel="stylesheet" href="<?php echo base_url('kindeditor/themes/default/default.css')?>" />
+    <link rel="stylesheet" href="<?php echo base_url('kindeditor/plugins/code/prettify.css')?>" />
+    <script charset="utf-8" src="<?php echo base_url('JQuery/jquery-3.2.0.js')?>"></script>
+    <script charset="utf-8" src="<?php echo base_url('kindeditor/kindeditor-all.js')?>"></script>
+    <script charset="utf-8" src="<?php echo base_url('kindeditor/kindeditor-all-min.js')?>"></script>
+    <script charset="utf-8" src="<?php echo base_url('kindeditor/lang/zh-CN.js')?>"></script>
+    <script charset="utf-8" src="<?php echo base_url('kindeditor/plugins/code/prettify.js')?>"></script>
+    <script type="text/javascript" src="<?php echo base_url('js/article_upload.js')?>"></script>
+    <script type="text/javascript" src="<?php echo base_url('js/checkexist.js')?>"></script>
+    <style type="text/css">
+        /*.main{max-width: 640px !important;margin: 0px auto;background-color: #fff !important;overflow: hidden;}*/
+        /*标题*/
+        .con h2{font-size:24px;font-weight:400;line-height:1.4;margin-bottom:10px;margin-top:20px;}
+        .author{margin-bottom:18px;line-height:20px;font-size:0px;}
+        .author em{font-style: normal;color: #8C8C8C;display: inline-block;vertical-align: middle;margin-right: 8px;margin-bottom: 10px;font-size: 16px;}
+        .author a{color: #978EFC;}
+        /*文章内容*/
+        .imgcontent{border: 0px none; text-align: center; box-sizing: border-box;}
+        .imgcontent img{margin: 5px auto; max-width: 100%; height: auto;}
+        .phone{height:1000px;background:url(../../../../../images/device/phone.png) no-repeat 19.2% center; background-size:35% 80%;margin: 0 auto;border-top:1px solid transparent;}
+        .main{width:30%;height:60%;margin-left:15%;background-color: #fff !important;overflow: auto;word-break: break-all;margin-top: 200px;}
+    </style>
+    <script>
+        var updatetitledata;
+//        富文本编辑器
+        KindEditor.ready(function(K)
+        {
+            var editor1 = K.create('textarea[name="updatecontent"]',
+                {
+                cssPath : '../../../../../kindeditor/plugins/code/prettify.css',
+                uploadJson : '../../../../../kindeditor/php/upload_json.php',
+                fileManagerJson : '../../../../../kindeditor/php/file_manager_json.php',
+                allowFileManager : true,
+                allowImageUpload : true,
+                afterCreate : function()
+                {
+                    var self = this;
+                    K.ctrl(document, 13, function()
+                    {
+                        self.sync();
+                        K('form[name=example]')[0].submit();
+                    });
+                    K.ctrl(self.edit.doc, 13, function()
+                    {
+                        self.sync();
+                        K('form[name=example]')[0].submit();
+                    });
+                },
+                afterBlur: function()
+                {
+                    this.sync();
+                    if($("#updatecontent").val().length<5 ||  $("#updatecontent").val().length>1000)
+                    {
+                        $("#updatecontenterror").css("display","block");
+                    }
+                    else
+                    {
+                        $("#updatecontenterror").css("display","none");
+                    }
+                }
+            });
+            prettyPrint();
+        });
+
+        function addToStorage()
+        {
+            if(typeof (updatetitledata)=="undefined")
+            {
+                $("#t").html(ti);
+            }
+            else
+            {
+                sessionStorage.title = updatetitledata;
+                $("#t").html(sessionStorage.title);
+            }
+                sessionStorage.con = $("#updatecontent").val();
+                $("#articlecon").html(sessionStorage.con);
+                $("#d").html(d);
+                $("#articlecon img").addClass("img-responsive");
+
+        }
+
+        window.onload = function ()
+        {
+            ti = $("#updatetitle").val();
+            //       ""里填写希望请求的 URL
+            checkexist2("updatetitle","../../../article/update_unique");
+            errhidden();
+            formblur("updatetitle","value.length<2 || value.length>10");
+            formblur("updateintro","value.length<5 || value.length>20");
+//            formblur("updatecontent","value.length<5 || value.length>1000");
+            $("#articlecon img").addClass("img-responsive");
+
+            $("#formsubmit").submit(function()
+            {
+                isempty("updatetitle");
+                isempty("updateintro");
+                isempty("updatecontent");
+                aftersubmit("updatetitle","v.length<2 || v.length>10");
+                aftersubmit("updateintro","v.length<5 || v.length>20");
+                aftersubmit("updatecontent","v.length<5 || v.length>1000");
+                var err1 = $("#updatetitleerror").css("display");
+                var err2 = $("#imgerror").css("display");
+                var err3 = $("#updateintroerror").css("display");
+                var err4 = $("#updatecontenterror").css("display");
+                var err5 =  $("#inexistence").css("display");
+                if(err1=="block"||err2=="block"||err3=="block"||err4=="block"||err5=="block")
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            });
+
+            if(typeof (Storage)=="undefined")
+            {
+                alert("对不起，您的浏览器不支持Web Storage");
+            }
+            else
+            {
+                pre.addEventListener("click",addToStorage);
+            }
+        }
+
+    </script>
+</head>
+<body>
+<div class="admintop">
+    <span><img src="<?php echo base_url('images/login/Hunsdon.png')?>" alt="logo" width="60%" height="60%"></span>
+    <ul>
+        <li><a href="./funcAction?tag=update&people=${sessionScope.username}">欢迎你,admin</a></li>
+        <li><a href="./funcAction?tag=exit">安全退出</a></li>
+    </ul>
+</div>
+<div class="admincenter">
+    <div class="adminNavigation sidebar">
+        <dl>
+            <dd>
+                <div class="title"><a id="system" href="<?php  echo site_url('background/user_operate/display');?>" >用户管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/order_operate/display');?>">订单管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/machine/display');?>" >净水机型号管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/filter/display');?>" >净水机滤芯管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/article/display');?>" >文章管理</a></div>
+            </dd>
+        </dl>
+    </div>
+    <!--<div class="admintable">-->
+    <div class="adminTableCen">
+        <div class="admintable">
+            <?php echo form_open_multipart('background/article/update/' . $row->articleid . '/' . $segment , array('method' => 'post','id' => 'formsubmit'))?>
+            <table class="dateTable" id="check">
+                <tr>
+                    <td><label>文章标题</label></td>
+                    <td>
+                        <input type="text" name="updatetitle" id="updatetitle" value="<?php echo (set_value('updatetitle') != '') ? set_value('updatetitle') : $row->articlename?>">
+                        <?php echo form_error('updatetitle')?>
+                        <span id="updatetitleerror" class="err" style="display: none;">文章标题正确格式为：长度大于2，小于10</span>
+                        <span id="inexistence" style="display: none;">这个文章标题已存在</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>文章缩略图</label></td>
+                    <td>
+                        <input type="file" name="upload" id="upload" onchange="getFullPath(this);">
+                        <?php echo isset($error) ? $error : '';?>
+                        <img id="img" alt="" src="<?php echo $row->articleimg?>"  style="height:100px; width: 100px;" onload="checkimg();errhidden();" />
+                        <span id="imgerror" style="display: none;">您要上传的图片高度或宽度超出了限制</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>文章简介</label></td>
+                    <td>
+                        <input type="text" name="updateintro" id="updateintro" value="<?php echo (set_value('updateintro') != '') ? set_value('updateintro') : $row->articleintro?>">
+                        <?php echo form_error('updateintro')?>
+                        <span id="updateintroerror" class="err" style="display: none;">文章简介正确格式为：长度大于5，小于20</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>文章内容</label></td>
+                    <td>
+                        <textarea name="updatecontent" id="updatecontent" cols="30" rows="23"><?php echo (set_value('updatecontent') != '') ? set_value('updatecontent') : $row->articlecontent?></textarea>
+                        <?php echo form_error('updatecontent')?>
+                        <span id="updatecontenterror" class="err" style="display: none;">文章内容正确格式为：长度大于5，小于20</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>文章预览</label></td>
+                    <td>
+                        <a class="btn btn-warning" id="pre"  style="width: 150px;margin:30px 0 0 30px;">预览文章效果</a>
+                        <div class="phone">
+                            <div id="editer" class="container main">
+                                <div class="con">
+                                    <!-- 标题 -->
+                                    <h2 id="t"><?php echo (set_value('updatetitle') != '') ? set_value('updatetitle') : $row->articlename?></h2>
+                                    <!-- 时间、作者 -->
+                                    <div class="author">
+                                        <em id="d"></em>
+                                        <em>江西汇沐暖通工程有限公司</em>
+                                    </div>
+                                    <div class="articlecon" id="articlecon">
+                                        <?php echo (set_value('updatecontent') != '') ? set_value('updatecontent') : $row->articlecontent?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><input type="submit" value="提交"></td>
+                </tr>
+            </table>
+            </form>
+        </div>
+    </div>
+    <!--<div class="adminbm">版权所有Copyright © 2017 All Rights Reserved. 灵山乐嘉教育有限公司</div>-->
+</body>
+</html>
+

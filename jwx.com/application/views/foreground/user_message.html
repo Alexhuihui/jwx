@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>用户信息</title>
+
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=10,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+    <link href="images/favicon.gif" rel="icon" type="image/icon">
+    <link rel="stylesheet" href="<?php echo base_url('css/bootstrap.css')?>">
+    <script type="text/javascript" src="<?php echo base_url('js/jquery-3.2.0.js')?>"></script>
+    <script type="text/javascript" src="<?php echo base_url('js/bootstrap.js')?>"></script>
+    <!-- <link rel="stylesheet" type="text/css" href="../css/first.css"> -->
+    <style type="text/css">
+        /*初始化*/
+        blockquote, body, button, dd, div, dl, dt, form, h1, h2, h3, h4, h5, h6, input, li, ol, p, pre, td, textarea, th, ul {margin: 0;padding: 0;}
+        body{word-wrap: break-word !important;font: 14px Helvetica Neue,Helvetica,PingFang SC,微软雅黑,Tahoma,Arial,sans-serif;color: #333;background-color: #FFF;word-break: break-all;}
+        input{border:  none;outline-style: none;}
+        a{text-decoration: none;color:#000;}
+        a:hover,a:active{text-decoration: none;color: #8F8C8F;}
+        clearfix:after{content: ".";display: block;height: 0;visibility: hidden;clear: both;}
+
+        /*.main{max-width: 640px !important;margin: 0px auto;background-color: #fff !important;overflow: hidden;}*/
+        /*标题*/
+        .content h2{font-size:24px;font-weight:400;line-height:1.4;margin-bottom:10px;margin-top:20px;}
+        .author{margin-bottom:18px;line-height:20px;font-size:0px;}
+        .author em{font-style: normal;color: #8C8C8C;display: inline-block;vertical-align: middle;margin-right: 8px;margin-bottom: 10px;font-size: 16px;}
+        .author a{color: #978EFC;}
+
+        /*message*/
+        .main img{width: 100%;}
+        .main .message{margin: 20px auto;width: 95%;border-left: 3px solid #BBBBBB;}
+        .main .message table{margin-left: 20px;font-size: 20px;color: #898889;width: 90%;}
+        .main .message table tr{height: 80px;border-bottom:  1px solid #BBBBBB;}
+        .main .message table tr{word-break: break-all;}
+        #machinetype ,#filtertype {max-width:180px;min-width: 100px;}
+        .changetime{width: 95%;margin: 0 auto;margin-bottom:20px;}
+        /*machine*/
+        .machine span{display: block;width: 100%;height: 100px;font-size:35px;font-weight:bold;text-align: center;line-height: 100px;}
+        .machine span:first-child{color:#302D30;background-color: #fff;}
+        .machine img{width: 100%;}
+
+        /*footer*/
+        .footer{margin:0 auto;min-height: 155px;max-width: 640px ;background: #C5D9D4 url(../../images/home/raw_1506414163.png) no-repeat center 15%;margin-bottom: 10px;}
+        .footer .company{padding: 70px 0 10px 0;width: 80%;margin: 0 auto;}
+        .company p{text-align: center;color: #8C8C8C;font-size: 18px;}
+    </style>
+
+
+</head>
+<body cz-shortcut-listen="true">
+<div id="editer" class="container main" style="max-width: 640px !important;margin: 0px auto;background-color: #fff !important;overflow: hidden;">
+    <img src="../../images/user/raw_1506586946.png" alt="topimg" class="img-responsive">
+    <div class="message">
+        <table >
+                <tr>
+                    <td style="min-width:35%;">用户姓名</td>
+                    <td><?php echo $usermessage[0]['username'];?></td>
+                </tr>
+                <tr>
+                    <td>手机号码</td>
+                    <td><?php echo $usermessage[0]['telnum'];?></td>
+                </tr>
+                <tr>
+                    <td>当前地址</td>
+                    <td><?php echo $usermessage[0]['address'];?></td>
+                </tr>
+                <tr>
+                    <td>购机时间</td>
+                    <td><?php
+                                    $time = $usermessage[0]['createtime'];
+                                    $datestring = '%Y-%m-%d';
+                                    echo mdate($datestring, $time);
+                                ?></td>
+                </tr>
+                <tr>
+                    <td>购机型号</td>
+                    <td>
+                        <select name="machinetype" id="machinetype">
+                            <?php foreach($machine_name as $u):?>
+                                <option><?php   echo $u['machineid']?></option>
+                            <?php endforeach?>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>滤芯型号</td>
+                    <td>
+                        <select name="filtertype" id="filtertype" >
+                        </select>
+                    </td>
+                </tr>
+        </table>
+    </div>
+    <div class="machine">
+        <span>滤芯寿命</span>
+
+        <div class="changetime clearfix progress" id="changetime">
+            <div class="progress-bar" role="progressbar" aria-valuenow="60"
+                 aria-valuemin="0" aria-valuemax="100"  id="progress" style="height: 30px;"></div>
+        </div>
+
+
+        <!--<div style="text-align: center;"><img src="../../images/user/raw_1506573264.png" style="width: 50%;height: 50%;"></div>-->
+    </div>
+</div>
+
+    <div class="footer">
+        <!-- <img src="../images/home/raw_1506414163.png"> -->
+        <div class="company">
+            <p>公司名称：江西汇沐暖通工程有限公司</p>
+            <p>公司地址：江西省南昌市红谷滩新区华南城E加国际建材大市场D-3-070号</p>
+        </div>
+    </div>
+
+
+<script>
+    var machineData = new Array();
+    var Filtertypes = new Array();
+    var Changetime = new Array();
+    var Lefttime_percentage= new Array();
+    var len=0;
+
+    // 制作二级菜单
+    function madeSec()
+    {
+        //清空之前的二级菜单内容
+        $("#filtertype option").length = 0;
+        var html = "";
+        //根据获取到的净水器数量循环创建option
+        for (var i = 0; i < Filtertypes.length; i++)
+        {
+            html = html+
+                "<option value='"+i+"'>" + Filtertypes[i]+ "</option>";
+        }
+        //添加
+        $("#filtertype").html(html);
+    }
+
+    //制作进度条
+    function madePro()
+    {
+        //获取进度条
+        var progress=$("#progress");
+        console.log("二级菜单value"+$("#filtertype>option:selected").val());
+        //获取所选项的value
+        var selectedi=$("#filtertype>option:selected").val();
+
+        var w=Lefttime_percentage[selectedi]*100+"%";
+        console.log(w);
+        progress.text(Changetime[selectedi]+"天");
+        progress.css("width",w);
+    }
+
+    //获取数据，传入一级菜单选项
+    function getData(con)
+    {
+        machinename=con;
+        var machine={"machine":machinename};
+        console.log(machine);
+        $.post("../foreground/home/transmit",machine,function (data)
+        {
+            var json = eval(data); //数组
+            console.log(json[0].filter1);
+            console.log(json);
+            for(var i=1;i<=6;i++)
+            {
+                if(json[0]["filter"+i]!= null)
+                {
+                        Filtertypes.push(json[0]["filter"+i]);
+                        Changetime.push(json[0]["changetime"+i]);
+                        Lefttime_percentage.push(json[0]["lefttime_percentage"+i]);
+                }
+            }
+
+            console.log(Filtertypes[0]+"  "+Changetime[0]);
+
+            //制作二级菜单
+            madeSec();
+            //制作进度条
+            madePro();
+        });
+    }
+
+
+    window.onload= function()
+    {
+        // 输出刚加载时一级菜单的option文本内容
+        console.log("一级菜单首次加载的时候value"+$("#machinetype>option:selected").text());
+        var defaultcon=$("#machinetype>option:selected").text();
+        getData(defaultcon);
+
+        //一级菜单做出改变的时候
+        $("#machinetype").change(function ()
+        {
+            console.log("一级菜单做出改变的时候value"+$("#machinetype>option:selected").text());
+            var selectedcon=$("#machinetype>option:selected").text();
+            getData(selectedcon);
+        });
+
+        // 二级菜单做出改变的时候
+        $("#filtertype").change(function ()
+        {
+            // 制作进度条
+            madePro();
+        });
+    }
+
+</script>
+</body>
+</html>

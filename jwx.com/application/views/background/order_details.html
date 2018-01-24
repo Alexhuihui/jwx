@@ -1,0 +1,250 @@
+<!DOCTYPE HTML>
+<head>
+    <title>订单详情</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="<?php echo base_url('css/user_edit.css')?>">
+    <script type="text/javascript" src="<?php echo base_url('js/jquery-3.2.0.js')?>"></script>
+    <link rel="stylesheet" href="<?php echo base_url('css/bootstrap.css')?>">
+
+</head>
+<body>
+<script>
+    function checkid()
+    {
+        for (var i=1;i<=6;i++)
+        {
+            var fid = "#f"+i;
+            var value = $.trim($(fid +" td:nth-child(2)").text());
+            console.log("f1"+value);
+            if(value=="")
+            {
+                $("#f"+i).css("display","none");
+            }
+        }
+    }
+
+    window.onload = function()
+    {
+        checkid();
+    }
+</script>
+<div class="admintop">
+    <span><img src="<?php echo base_url('images/login/Hunsdon.png')?>" alt="logo" width="60%" height="60%"></span>
+    <ul>
+        <li><a href="./funcAction?tag=update&people=${sessionScope.username}">欢迎你,admin</a></li>
+        <li><a href="./funcAction?tag=exit">安全退出</a></li>
+    </ul>
+</div>
+<div class="admincenter">
+    <div class="adminNavigation sidebar">
+        <dl>
+            <dd>
+                <div class="title"><a id="system" href="<?php  echo site_url('background/user_operate/display');?>" >用户管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/order_operate/display');?>">订单管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/machine/display');?>" >净水机型号管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/filter/display');?>" >净水机滤芯管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/article/display');?>" >文章管理</a></div>
+            </dd>
+        </dl>
+    </div>
+    <!--<div class="admintable">-->
+    <div class="adminTableCen">
+        <div class="admintable">
+            <form action="<?php echo  site_url('background/order_operate/edit_order');?>" method="post" >
+                <table class="dateTable" id="check">
+                    <tr>
+                        <td><label>订单id号</label></td>
+                        <td><?php echo $details[0]['orderid'];?></td>
+                    </tr>
+
+                    <tr>
+                        <td><label>用户姓名</label></td>
+                        <td><?php echo $user_message[0]['username'];?></td>
+                    </tr>
+
+                    <tr>
+                        <td><label>用户手机号码</label></td>
+                        <td><?php echo $user_message[0]['telnum'];?></td>
+                    </tr>
+
+                    <tr>
+                        <td><label>用户住址</label></td>
+                        <td><?php echo $user_message[0]['address'];?></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+
+                <table class="filterTable dateTable" >
+
+                    <tr>
+                        <td><label>滤芯槽位</label></td>
+                        <td><label>滤芯id号</label>
+                        <td><label>滤芯名称</label></td>
+                        <td><label>滤芯上次更换时间</label></td>
+                        <td><label>滤芯剩余时间(单位：天）</label></td>
+                    </tr>
+                    <tr id="f1">
+                        <td><label>滤芯1</label></td>
+                        <td><?php
+                        if($details[0]['filter1'] != -1)
+                        {echo $details[0]['filter1'];}?></td>
+                        <td>
+                            <?php
+                        if($details[0]['filter1'] != -1)
+                        {echo $filter[0]['name1'];}?>
+                        </td>
+                        <td><?php
+                                    if($details[0]['changetime1'] != 0)
+                                    {$time = $details[0]['changetime1'];
+                                    $datestring = '%Y-%m-%d';
+                                    echo mdate($datestring, $time);}
+                                ?>
+                        </td>
+                        <td>
+                            <?php
+                        if($details[0]['filter1'] != -1)
+                        {echo $filter[0]['lefttime1'];}?>
+                        </td>
+                    </tr>
+                    <tr id="f2">
+                        <td><label>滤芯2</label></td>
+                        <td><?php
+                        if($details[0]['filter2'] != -1)
+                        {echo $details[0]['filter2'];}?></td>
+                        <td>
+                            <?php
+                        if($details[0]['filter2'] != -1)
+                        {echo $filter[0]['name2'];}?>
+                        </td>
+                        <td><?php
+                                    if($details[0]['changetime2'] != 0)
+                                    {$time = $details[0]['changetime2'];
+                                    $datestring = '%Y-%m-%d';
+                                    echo mdate($datestring, $time);}
+                                ?>
+                        </td>
+                        <td>
+                            <?php
+                        if($details[0]['filter2'] != -1)
+                        {echo $filter[0]['lefttime2'];}?>
+                        </td>
+                    </tr>
+                    <tr id="f3">
+                        <td><label>滤芯3</label></td>
+                        <td><?php
+                        if($details[0]['filter3'] != -1)
+                        {echo $details[0]['filter3'];}?></td>
+                        <td>
+                            <?php
+                        if($details[0]['filter3'] != -1)
+                        {echo $filter[0]['name3'];}?>
+                        </td>
+                        <td><?php
+                                    if($details[0]['changetime3'] != 0)
+                                    {$time = $details[0]['changetime3'];
+                                    $datestring = '%Y-%m-%d';
+                                    echo mdate($datestring, $time);}
+                                ?>
+                        </td>
+                        <td>
+                            <?php
+                        if($details[0]['filter3'] != -1)
+                        {echo $filter[0]['lefttime3'];}?>
+                        </td>
+                    </tr>
+                    <tr id="f4">
+                        <td><label>滤芯4</label></td>
+                        <td><?php
+                        if($details[0]['filter4'] != -1)
+                        {echo $details[0]['filter4'];}?></td>
+                        <td>
+                            <?php
+                        if($details[0]['filter4'] != -1)
+                        {echo $filter[0]['name4'];}?>
+                        </td>
+                        <td><?php
+                                    if($details[0]['changetime4'] != 0)
+                                    {$time = $details[0]['changetime4'];
+                                    $datestring = '%Y-%m-%d';
+                                    echo mdate($datestring, $time);}
+                                ?>
+                        </td>
+                        <td>
+                            <?php
+                        if($details[0]['filter4'] != -1)
+                        {echo $filter[0]['lefttime4'];}?>
+                        </td>
+                    </tr>
+                    <tr id="f5">
+                        <td><label>滤芯5</label></td>
+                        <td><?php
+                        if($details[0]['filter5'] != -1)
+                        {echo $details[0]['filter5'];}?></td>
+                        <td>
+                            <?php
+                        if($details[0]['filter5'] != -1)
+                        {echo $filter[0]['name5'];}?>
+                        </td>
+                        <td><?php
+                                    if($details[0]['changetime5'] != 0)
+                                    {$time = $details[0]['changetime5'];
+                                    $datestring = '%Y-%m-%d';
+                                    echo mdate($datestring, $time);}
+                                ?>
+                        </td>
+                        <td>
+                            <?php
+                        if($details[0]['filter5'] != -1)
+                        {echo $filter[0]['lefttime5'];}?>
+                        </td>
+                    </tr>
+                    <tr id="f6">
+                        <td><label>滤芯6</label></td>
+                        <td><?php
+                        if($details[0]['filter6'] != -1)
+                        {echo $details[0]['filter6'];}?></td>
+                        <td>
+                            <?php
+                        if($details[0]['filter6'] != -1)
+                        {echo $filter[0]['name6'];}?>
+                        </td>
+                        <td><?php
+                                    if($details[0]['changetime6'] != 0)
+                                    {$time = $details[0]['changetime6'];
+                                    $datestring = '%Y-%m-%d';
+                                    echo mdate($datestring, $time);}
+                                ?>
+                        </td>
+                        <td>
+                            <?php
+                        if($details[0]['filter6'] != -1)
+                        {echo $filter[0]['lefttime6'];}?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <a class="btn btn-warning"  style="width: 100px;margin-left: 30px;" onclick="window.history.back();">返回</a>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+    <!--<div class="adminbm">版权所有Copyright © 2017 All Rights Reserved. 灵山乐嘉教育有限公司</div>-->
+</body>
+</html>

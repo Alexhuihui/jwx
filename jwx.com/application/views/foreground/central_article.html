@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>中央净水</title>
+
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=10,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+
+    <link href="images/favicon.gif" rel="icon" type="image/icon">
+    <link rel="stylesheet" href="<?php echo base_url('css/bootstrap.css')?>">
+    <link rel="stylesheet" href="<?php echo base_url('css/article_index.css')?>">
+    <!-- <link rel="stylesheet" type="text/css" href="../css/first.css"> -->
+
+</head>
+<body cz-shortcut-listen="true">
+<div id="editer" class="container main" style="max-width: 640px !important;margin: 0px auto;background-color: #fff !important;overflow: hidden;">
+    <div class="content" >
+        <!-- 标题 -->
+        <h2>中央净水，选汉斯顿</h2>
+        <!-- 时间、作者 -->
+        <div class="author">
+            <em >2017-10-20 </em>
+            <em>汉斯顿集团</em>
+        </div>
+
+        <section data-role="outer"  style="font-family:微软雅黑;font-size:16px;">
+            <!-- 第一张图 -->
+            <section class="imgcontent" >
+                <img src="<?php echo base_url('images/central/raw_1506408813.jpeg')?>" style="margin: 0px auto; max-width: 100%; height: auto;" data-src="../images/central/raw_1506408813.jpeg">
+            </section>
+            <!-- 第二张图 -->
+            <section class="imgcontent" >
+                <img src="<?php echo base_url('images/central/raw_1506408876.jpeg')?>" data-src="../images/central/raw_1506408876.jpeg">
+            </section>
+            <section class="imgcontent" >
+                <img src="<?php echo base_url('images/central/raw_1506408929.jpeg')?>" data-src="../images/central/raw_1506408929.jpeg">
+            </section>
+            <section class="imgcontent" >
+                <img src="<?php echo base_url('images/central/raw_1506409043.jpeg')?>" data-src="../images/central/raw_1506409043.jpeg">
+            </section>
+            <section class="imgcontent" >
+                <img src="<?php echo base_url('images/central/raw_1506409046.jpeg')?>" data-src="../images/central/raw_1506409046.jpeg">
+            </section>
+            <section class="imgcontent" >
+                <img src="<?php echo base_url('images/central/raw_1506409047.jpeg')?>" data-src="../images/central/raw_1506409047.jpeg">
+            </section>
+            <section class="imgcontent" >
+                <img src="<?php echo base_url('images/central/raw_1506409346.jpeg')?>" data-src="../images/central/raw_1506409346.jpeg">
+            </section>
+        </section>
+    </div>
+    <p><br></p>
+    <div class="central_foot ">
+        <div class="read"><span>阅读 </span><em>1437</em></div>
+        <div class="like"><span class="glyphicon glyphicon-thumbs-up likeicon" style=" color:#50544E; "onclick="like();" id="likeicon"></span><em style="margin-left: 5px;">23</em></div>
+        <div class="cpmplain"><a href="#">投诉</a></div>
+    </div>
+</div>
+<script type="text/javascript">
+    var flag=1
+    function like(){
+        var likeicon=document.getElementById("likeicon");
+        if(flag==1){
+            likeicon.style.color="#8AB0F9";
+            flag=0;
+        }else if(flag==0){
+            likeicon.style.color="#50544E";
+            flag=1;
+        }
+    }
+</script>
+<script type="text/javascript" src="<?php echo base_url('js/jquery-3.2.0.js')?>"></script>
+<script type="text/javascript" src="<?php echo base_url('js/bootstrap.js')?>"></script>
+</body>
+</html>

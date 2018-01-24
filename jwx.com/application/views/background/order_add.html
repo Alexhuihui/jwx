@@ -1,0 +1,189 @@
+<!DOCTYPE HTML>
+<head>
+    <title>添加订单</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="<?php echo base_url('css/user_edit.css')?>">
+    <script type="text/javascript" src="<?php echo base_url('js/jquery-3.2.0.js')?>"></script>
+    <link rel="stylesheet" href="<?php echo base_url('css/bootstrap.css')?>">
+    <script type="text/javascript" src="<?php echo base_url('js/formcheck.js')?>"></script>
+</head>
+<body>
+<script>
+    function checkexist()
+    {
+        var telnumdata = $.trim($("#telnum").val());
+        console.log(telnum);
+        var telnum={"telnum":telnumdata};
+//       ""里填写希望请求的 URL
+        $.post("../../background/order_operate/check_tel",telnum,function (data)
+        {
+
+            var json = JSON.parse(data);
+            var flag = json[0].exist;
+            console.log("flag"+flag);
+
+            for(var i=0;i<data.length;i++)
+            {
+                if(flag==0)
+                {
+                    $("#inexistence").css("display","block");
+                }
+                else
+                {
+                    $("#inexistence").css("display","none");
+                }
+            }
+        });
+
+    }
+
+    window.onload = function ()
+    {
+        formblur("telnum","(value.length>0 && value.length != 11) || patrn.exec(value) == null");
+        formblur("buytime","date.exec(value) == null");
+//        $("#filter1").click(function(){
+//            console.log($("#filter1").val());
+//        });
+
+        $("#formsubmit").submit(function()
+        {
+            isempty("telnum");
+            aftersubmit("telnum","(v.length>0 && v.length != 11) || patrn.exec(v) == null");
+            aftersubmit("buytime","date.exec(v) == null")
+            var err1 = $("#telnumerror").css("display");
+            var err2 = $("#inexistence").css("display");
+            var err3 = $("#buytimeerror").css("display");
+            if(err1=="block"||err2=="block"||err3=="block" )
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        });
+    }
+</script>
+
+<div class="admintop">
+    <span><img src="<?php echo base_url('images/login/Hunsdon.png')?>" alt="logo" width="60%" height="60%"></span>
+    <ul>
+        <li><a href="#">欢迎你,admin</a></li>
+        <li><a href="<?php echo site_url('background/quit');?>">安全退出</a></li>
+    </ul>
+</div>
+<div class="admincenter">
+    <div class="adminNavigation sidebar">
+        <dl>
+            <dd>
+                <div class="title"><a id="system" href="<?php  echo site_url('background/user_operate/display');?>" >用户管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/order_operate/display');?>">订单管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/machine/display');?>" >净水机型号管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/filter/display');?>" >净水机滤芯管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/article/display');?>" >文章管理</a></div>
+            </dd>
+        </dl>
+    </div>
+    <!--<div class="admintable">-->
+    <div class="adminTableCen">
+        <div class="admintable">
+            <form action="<?php echo  site_url('background/order_operate/insert_order');?>" method="post" id="formsubmit">
+                <table class="dateTable" id="check">
+                    <tr>
+                        <td><label>用户手机号</label></td>
+                        <td>
+                            <input type="text" name="telnum" id="telnum" oninput="checkexist();">
+                            <span id="telnumerror" style="display: none;">电话号码正确格式为：长度为11位，只能为数字</span>
+                            <span id="inexistence" style="display: none;">这个电话号码不存在</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>购机时间</label></td>
+                        <td>
+                            <input type="text" name="buytime" id="buytime" required>
+                            <span id="buytimeerror" style="display: none;">您未填写正确的日期或格式错误</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>净水机名称</label></td>
+                        <td><select name="machineid" id="machineid" required>
+                            <?php foreach($machine as $u):?>
+                            <option value="<?php echo $u['machineid'];?>"><?php echo $u['machinename'];?></option>
+                            <?php endforeach;?>
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td><label>滤芯1的名称</label></td>
+                        <td><select name="filter1" id="filter1">
+                            <option value="-1"></option>
+                            <?php foreach($filter as $u):?>
+                            <option value="<?php echo $u['filterid'];?>"><?php echo $u['filtername'];?></option>
+                            <?php endforeach;?>
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td><label>滤芯2的名称</label></td>
+                        <td><select name="filter2" id="filter2">
+                            <option value="-1"></option>
+                            <?php foreach($filter as $u):?>
+                            <option value="<?php echo $u['filterid'];?>"><?php echo $u['filtername'];?></option>
+                            <?php endforeach;?>
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td><label>滤芯3的名称</label></td>
+                        <td><select name="filter3" id="filter3">
+                            <option value="-1"></option>
+                            <?php foreach($filter as $u):?>
+                            <option value="<?php echo $u['filterid'];?>"><?php echo $u['filtername'];?></option>
+                            <?php endforeach;?>
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td><label>滤芯4的名称</label></td>
+                        <td><select name="filter4" id="filter4">
+                            <option value="-1"></option>
+                            <?php foreach($filter as $u):?>
+                            <option value="<?php echo $u['filterid'];?>"><?php echo $u['filtername'];?></option>
+                            <?php endforeach;?>
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td><label>滤芯5的名称</label></td>
+                        <td><select name="filter5" id="filter5">
+                            <option value="-1"></option>
+                            <?php foreach($filter as $u):?>
+                            <option value="<?php echo $u['filterid'];?>"><?php echo $u['filtername'];?></option>
+                            <?php endforeach;?>
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td><label>滤芯6的名称</label></td>
+                        <td><select name="filter6" id="filter6">
+                            <option value="-1"></option>
+                            <?php foreach($filter as $u):?>
+                            <option value="<?php echo $u['filterid'];?>"><?php echo $u['filtername'];?></option>
+                            <?php endforeach;?>
+                        </select></td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td><input type="submit" value="提交"></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+    <!--<div class="adminbm">版权所有Copyright © 2017 All Rights Reserved. 灵山乐嘉教育有限公司</div>-->
+</body>
+</html>
+

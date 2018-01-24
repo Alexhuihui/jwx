@@ -1,0 +1,248 @@
+<!DOCTYPE HTML>
+<head>
+    <title>编辑用户资料</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="<?php echo base_url('css/user_edit.css')?>">
+    <script type="text/javascript" src="<?php echo base_url('js/jquery-3.2.0.js')?>"></script>
+    <link rel="stylesheet" href="<?php echo base_url('css/bootstrap.css')?>">
+    <script type="text/javascript" src="<?php echo base_url('js/formcheck.js')?>"></script>
+
+</head>
+<body>
+<script>
+    //    隐藏不存在的滤芯
+    function checkid()
+    {
+        for (var i=1;i<=6;i++)
+        {
+            var fid = "#f"+i;
+            var value = $.trim($(fid +" td:nth-child(2)").text());
+            console.log("f1"+value);
+            if(value==-1)
+            {
+                $("#f"+i).css("display","none");
+            }
+        }
+
+    }
+
+    window.onload = function()
+    {
+        for (var i=1;i<=6;i++)
+        {
+
+            formblur("changetime"+i,"date.exec(value) == null");
+        }
+
+        checkid();
+
+        $("#formsubmit").submit(function()
+        {
+            for (var j=1;j<=6;j++)
+            {
+                if ($("#changetime" + j + "error").css("display") == "block")
+                {
+                    return false;
+                }
+            }
+        });
+    }
+
+
+
+</script>
+<div class="admintop">
+    <span><img src="<?php echo base_url('images/login/Hunsdon.png')?>" alt="logo" width="60%" height="60%"></span>
+    <ul>
+        <li><a href="#">欢迎你,admin</a></li>
+        <li><a href="<?php echo site_url('background/quit');?>">安全退出</a></li>
+    </ul>
+</div>
+<div class="admincenter">
+    <div class="adminNavigation sidebar">
+        <dl>
+            <dd>
+                <div class="title"><a id="system" href="<?php  echo site_url('background/user_operate/display');?>" >用户管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/order_operate/display');?>">订单管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/machine/display');?>" >净水机型号管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/filter/display');?>" >净水机滤芯管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/article/display');?>" >文章管理</a></div>
+            </dd>
+        </dl>
+    </div>
+    <!--<div class="admintable">-->
+    <div class="adminTableCen">
+        <div class="admintable" >
+            <form method="post" id="formsubmit" action="<?php echo  site_url('background/order_operate/edit_order/'."$segment");?>">
+            <table class="dateTable order_table" id="check">
+                <thead>
+                <tr>
+                    <td><label>滤芯槽位</label></td>
+                    <td><label>滤芯id号</label></td>
+                    <td><label>滤芯型号</label></td>
+                    <td><label>滤芯上次更换时间（年-月-日）</label></td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr id="f1">
+                    <td>滤芯1</td>
+                    <td>
+                        <?php
+                            if($user[0]['filter1'] != -1)
+                            {echo $user[0]['filter1'];}
+                               else
+                                {echo "-1";}?>
+                    </td>
+                    <td>
+                        <?php
+                        if($user[0]['filter1'] != -1)
+                        {echo $filter[0]['name1'];}?>
+                    </td>
+                    <td>
+                        <input type="text" name="changetime1" id="changetime1" value="<?php
+                                        if($user[0]['changetime1'] != 0)
+                                        {$time = $user[0]['changetime1'];
+                                        $datestring = '%Y-%m-%d';
+                                        echo mdate($datestring, $time);}
+                                         else{echo 0;}
+                                    ?>">
+                        <span id="changetime1error" style="display: none;">您未填写正确的日期或格式错误</span>
+                    </td>
+                </tr>
+                <tr id="f2">
+                    <td>滤芯2</td>
+                    <td>
+                        <?php
+                            if($user[0]['filter2'] != -1)
+                            {echo $user[0]['filter2'];}else
+                                {echo "-1";}?>
+                    </td>
+                    <td>
+                        <?php
+                        if($user[0]['filter2'] != -1)
+                        {echo $filter[0]['name2'];}?>
+                    </td>
+                    <td>
+                        <input type="text" name="changetime2" id="changetime2" value="<?php
+                                        if($user[0]['changetime2'] != 0)
+                                        {$time = $user[0]['changetime2'];
+                                        $datestring = '%Y-%m-%d';
+                                        echo mdate($datestring, $time);}else{echo 0;}
+                                    ?>">
+                        <span id="changetime2error" style="display: none;">您未填写正确的日期或格式错误</span>
+                    </td>
+                </tr>
+                <tr id="f3">
+                    <td>滤芯3</td>
+                    <td>
+                        <?php
+                            if($user[0]['filter3'] != -1)
+                            {echo $user[0]['filter3'];}else
+                                {echo "-1";}?>
+                    </td>
+                    <td>
+                        <?php
+                        if($user[0]['filter3'] != -1)
+                        {echo $filter[0]['name3'];}?>
+                    </td>
+                    <td>
+                        <input type="text" name="changetime3" id="changetime3" value="<?php
+                                        if($user[0]['changetime3'] != 0)
+                                        {$time = $user[0]['changetime3'];
+                                        $datestring = '%Y-%m-%d';
+                                        echo mdate($datestring, $time);}else{echo 0;}
+                                    ?>">
+                        <span id="changetime3error" style="display: none;">您未填写正确的日期或格式错误</span>
+                    </td>
+                </tr>
+                <tr id="f4">
+                    <td>滤芯4</td>
+                    <td>
+                        <?php
+                            if($user[0]['filter4'] != -1)
+                            {echo $user[0]['filter4'];}else
+                                {echo "-1";}?>
+                    </td>
+                    <td>
+                        <?php
+                        if($user[0]['filter4'] != -1)
+                        {echo $filter[0]['name4'];}?>
+                    </td>
+                    <td>
+                        <input type="text" name="changetime4" id="changetime4" value="<?php
+                                        if($user[0]['changetime4'] != 0)
+                                        {$time = $user[0]['changetime4'];
+                                        $datestring = '%Y-%m-%d';
+                                        echo mdate($datestring, $time);}else{echo 0;}
+                                    ?>">
+                        <span id="changetime4error" style="display: none;">您未填写正确的日期或格式错误</span>
+                    </td>
+                </tr>
+                <tr id="f5">
+                    <td>滤芯5</td>
+                    <td>
+                        <?php
+                            if($user[0]['filter5'] != -1)
+                            {echo $user[0]['filter5'];}else
+                                {echo "-1";}?>
+                    </td>
+                    <td>
+                        <?php
+                        if($user[0]['filter5'] != -1)
+                        {echo $filter[0]['name5'];}?>
+                    </td>
+                    <td>
+                        <input type="text" name="changetime5" id="changetime5" value="<?php
+                                        if($user[0]['changetime5'] != 0)
+                                        {$time = $user[0]['changetime5'];
+                                        $datestring = '%Y-%m-%d';
+                                        echo mdate($datestring, $time);}else{echo 0;}
+                                    ?>">
+                        <span id="changetime5error" style="display: none;">您未填写正确的日期或格式错误</span>
+                    </td>
+                </tr>
+                <tr id="f6">
+                    <td>滤芯6</td>
+                    <td>
+                        <?php
+                            if($user[0]['filter6'] != -1)
+                            {echo $user[0]['filter6'];}else
+                                {echo "-1";}?>
+                    </td>
+                    <td>
+                        <?php
+                        if($user[0]['filter6'] != -1)
+                        {echo $filter[0]['name6'];}?>
+                    </td>
+                    <td>
+                        <input type="text" name="changetime6" id="changetime6" value="<?php
+                                        if($user[0]['changetime6'] != 0)
+                                        {$time = $user[0]['changetime6'];
+                                        $datestring = '%Y-%m-%d';
+                                        echo mdate($datestring, $time);}else{echo 0;}
+                                    ?>">
+                        <span id="changetime6error" style="display: none;">您未填写正确的日期或格式错误</span>
+                    </td>
+                </tr>
+                <tr>
+                    <input type="hidden" name="orderid" value="<?php echo  $user[0]['orderid']?>">
+                    <td></td>
+                    <td></td>
+                    <td><input type="submit" value="修改" ></td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

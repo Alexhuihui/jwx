@@ -1,0 +1,87 @@
+
+<!DOCTYPE HTML>
+<head>
+    <title>订单管理</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="<?php echo base_url('css/check_display.css')?>">
+    <script type="text/javascript" src="<?php echo base_url('js/jquery-3.2.0.js')?>"></script>
+    <link rel="stylesheet" href="<?php echo base_url('css/bootstrap.css')?>">
+
+</head>
+<body>
+<div class="admintop">
+    <span><img src="<?php echo base_url('images/login/Hunsdon.png')?>" alt="logo" width="60%" height="60%"></span>
+    <ul>
+        <li><a href="#">欢迎你,admin</a></li>
+        <li><a href="<?php echo site_url('background/quit');?>">安全退出</a></li>
+    </ul>
+</div>
+<div class="admincenter">
+    <div class="adminNavigation sidebar">
+        <div class="adminNavigation">
+            <dl>
+                <dd>
+                    <div class="title"><a id="system" href="<?php  echo site_url('background/user_operate/display');?>" >用户管理</a></div>
+                </dd>
+                <dd>
+                    <div class="title"><a href="<?php  echo site_url('background/order_operate/display');?>">订单管理</a></div>
+                </dd>
+                <dd>
+                    <div class="title"><a href="<?php  echo site_url('background/machine/display');?>" >净水机型号管理</a></div>
+                </dd>
+                <dd>
+                    <div class="title"><a href="<?php  echo site_url('background/filter/display');?>" >净水机滤芯管理</a></div>
+                </dd>
+                <dd>
+                    <div class="title"><a href="<?php  echo site_url('background/article/display');?>" >文章管理</a></div>
+                </dd>
+            </dl>
+        </div>
+    </div>
+    <div class="admintable">
+        <div class="operate_top">
+            <a class="btn btn-warning" href="<?php  echo site_url('background/order_skip/order_add');?>">添加订单</a>
+        </div>
+        <table class="dateTable">
+            <thead>
+            <tr>
+                <td>订单id号</td>
+                <td>购买时间</td>
+                <td>用户姓名</td>
+                <td>净水机型号</td>
+                <td>操作</td>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach($order as $u):?>
+            <tr >
+                <td><?php echo $u['orderid'];?></td>
+                <td>
+                    <?php
+                                    $time = $u['buytime'];
+                                    $datestring = '%Y-%m-%d';
+                                    echo mdate($datestring, $time);
+                                ?>
+                </td>
+                <td><?php echo $u['username'];?></td>
+                <td><?php echo $u['machinename'];?></td>
+                <td>
+                    <a href="<?php echo  site_url('background/order_skip/order_edit/'.$u['orderid'].'/'. $this->uri->segment(4 , 0));?>">编辑</a>
+                    <a href="<?php echo  site_url('background/order_operate/order_del/'.$u['orderid'].'/'. $this->uri->segment(4 , 0));?>" onclick= "return confirm('是否确定删除?');">删除</a>
+                    <a href="<?php echo  site_url('background/order_skip/order_details/'.$u['orderid']);?>">详情</a>
+                </td>
+            </tr>
+            <?php endforeach;?>
+            </tbody>
+        </table>
+        <div class="operate">
+            <div class="link">
+                <?php   echo $links;?>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div class="adminbm">版权所有Copyright © 2017 All Rights Reserved. 灵山乐嘉教育有限公司</div>-->
+</body>
+</html>
+

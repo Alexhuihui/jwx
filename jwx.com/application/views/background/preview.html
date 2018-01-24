@@ -1,0 +1,60 @@
+<?php
+    life();
+?>
+<!doctype html>
+<html lang="en">
+<head>
+    <title><?php echo $result->articlename?></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="<?php echo base_url('css/check_display.css')?>">
+    <script type="text/javascript" src="<?php echo base_url('js/jquery-3.2.0.js')?>"></script>
+    <link rel="stylesheet" href="<?php echo base_url('css/bootstrap.css')?>">
+
+    <style type="text/css">
+        /*初始化*/
+        blockquote, body, button, dd, div, dl, dt, form, h1, h2, h3, h4, h5, h6, input, li, ol, p, pre, td, textarea, th, ul {margin: 0;padding: 0;}
+        body{word-wrap: break-word !important;font: 14px Helvetica Neue,Helvetica,PingFang SC,微软雅黑,Tahoma,Arial,sans-serif;color: #333;background-color: #ccc;
+            word-break: break-all;}
+        a{text-decoration: none;color:#000;}
+        a:hover,a:active{text-decoration: none;color: #8F8C8F;}
+
+        /*.main{max-width: 640px !important;margin: 0px auto;background-color: #fff !important;overflow: hidden;}*/
+        /*标题*/
+        .content h2{font-size:24px;font-weight:400;line-height:1.4;margin-bottom:10px;margin-top:20px;}
+        .author{margin-bottom:18px;line-height:20px;font-size:0px;}
+        .author em{font-style: normal;color: #8C8C8C;display: inline-block;vertical-align: middle;margin-right: 8px;margin-bottom: 10px;font-size: 16px;}
+        .author a{color: #978EFC;}
+        /*文章内容*/
+        .imgcontent{border: 0px none; text-align: center; box-sizing: border-box;}
+        .imgcontent img{margin: 5px auto; max-width: 100%; height: auto;}
+        .phone{height:1024px;background:url(../../../../images/device/phone.png) no-repeat center top; background-size:35% 80%;margin: 0 auto;}
+        .main{width:30%;height:60%;margin: 0px auto;background-color: #fff !important;overflow: auto;word-break: break-all;margin: 0 auto;position: relative;top: 105px;}
+    </style>
+</head>
+
+<body>
+<script>
+    window.onload = function()
+    {
+        $("#articlecon img").addClass("img-responsive");
+    }
+</script>
+<div class="phone">
+    <div id="editer" class="container main">
+        <div class="content">
+        <!-- 标题 -->
+            <h2><?php echo $result->articlename?></h2>
+        <!-- 时间、作者 -->
+            <div class="author">
+                <em ><?php echo $result->updatetime?></em>
+                <em>江西汇沐暖通工程有限公司</em>
+            </div>
+            <div class="articlecon" id="articlecon">
+                <?= $result->articlecontent?>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

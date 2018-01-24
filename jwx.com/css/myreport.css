@@ -1,0 +1,15 @@
+@charset "utf-8";
+/*初始化*/
+body,div,p,h3,ul,li,input,img{margin:0;padding:0;color:#000;font-size:15px;font-family: serif; }
+img{border:0 none;}
+/*input{border:0 none;outline-style: none;}*/
+a{text-decoration: none;color:#000;}
+a:hover,a:active{text-decoration: none;color: #8F8C8F;}
+li{list-style: none;}
+.clearfix:after { content:"."; display:block; height:0; visibility:hidden; clear:both;}
+
+/*link*/
+.link a,.link strong{display:inline-block;color: black; padding: 8px 16px;}
+.link a:hover{background-color: #ddd;}
+.link strong{background-color: #968585;color: white;}
+.link{margin-top:10px;display: inline-block;height:80px;width:100%;margin: 0 auto;text-align: center;}

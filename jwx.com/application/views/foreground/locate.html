@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        body, html {width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+        #allmap{width:100%;height:70%;}
+        p{margin-left:5px; font-size:14px;}
+    </style>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=dKMcvVRfWAwx3upPnajHljd7n7fWoYHE"></script>
+    <title>江西汇沐暖通工程有限公司</title>
+</head>
+<body>
+<div id="allmap"></div>
+<h2>&nbsp;&nbsp;汉斯顿集团</h2>
+<p>江西省南昌市红谷滩新区华南城E加国际建材大市场D-3-070号</p>
+</body>
+</html>
+<script type="text/javascript">
+    // 百度地图API功能
+    var map = new BMap.Map("allmap");
+    var point = new BMap.Point(115.776635,28.643296);
+    var marker = new BMap.Marker(point);  // 创建标注
+    map.addOverlay(marker);              // 将标注添加到地图中
+    map.centerAndZoom(point, 21);
+    var opts = {
+        width : 200,     // 信息窗口宽度
+        height: 100,     // 信息窗口高度
+        title : "江西汇沐暖通工程有限公司" , // 信息窗口标题
+        enableMessage:true,//设置允许信息窗发送短息
+    }
+    var infoWindow = new BMap.InfoWindow("地址：江西省南昌市红谷滩新区华南城E加国际建材大市场D-3-070号", opts);  // 创建信息窗口对象
+    marker.addEventListener("click", function(){
+        map.openInfoWindow(infoWindow,point); //开启信息窗口
+    });
+</script>

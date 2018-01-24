@@ -1,0 +1,104 @@
+<?php
+    life();
+?>
+<!DOCTYPE HTML>
+<head>
+    <title><?= $result->articlename?></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="<?php echo base_url('css/user_edit.css')?>">
+    <script type="text/javascript" src="<?php echo base_url('js/jquery-3.2.0.js')?>"></script>
+    <link rel="stylesheet" href="<?php echo base_url('css/bootstrap.css')?>">
+    <style type="text/css">
+        /*初始化*/
+        blockquote, body, button, dd, div, dl, dt, form, h1, h2, h3, h4, h5, h6, input, li, ol, p, pre, td, textarea, th, ul {margin: 0;padding: 0;}
+        body{word-wrap: break-word !important;font: 14px Helvetica Neue,Helvetica,PingFang SC,微软雅黑,Tahoma,Arial,sans-serif;color: #333;background-color: #ccc;
+            word-break: break-all;}
+        a{text-decoration: none;color:#000;}
+        a:hover,a:active{text-decoration: none;color: #8F8C8F;}
+
+        /*.main{max-width: 640px !important;margin: 0px auto;background-color: #fff !important;overflow: hidden;}*/
+        /*标题*/
+        .content h2{font-size:24px;font-weight:400;line-height:1.4;margin-bottom:10px;margin-top:20px;}
+        .author{margin-bottom:18px;line-height:20px;font-size:0px;}
+        .author em{font-style: normal;color: #8C8C8C;display: inline-block;vertical-align: middle;margin-right: 8px;margin-bottom: 10px;font-size: 16px;}
+        .author a{color: #978EFC;}
+        /*文章内容*/
+        .imgcontent{border: 0px none; text-align: center; box-sizing: border-box;}
+        .imgcontent img{margin: 5px auto; max-width: 100%; height: auto;}
+        .phone{height:1024px;background:url(../../../../images/device/phone.png) no-repeat center top; background-size:35% 80%;margin: 0 auto;}
+        .main{width:30%;height:60%;margin: 0px auto;background-color: #fff !important;overflow: auto;word-break: break-all;margin: 0 auto;position: relative;top: 105px;}
+    </style>
+</head>
+<body>
+<script>
+    window.onload = function()
+    {
+        $("#articlecon img").addClass("img-responsive");
+    }
+
+</script>
+<div class="admintop">
+    <span><img src="<?php echo base_url('images/login/Hunsdon.png')?>" alt="logo" width="60%" height="60%"></span>
+    <ul>
+        <li><a href="./funcAction?tag=update&people=${sessionScope.username}">欢迎你,admin</a></li>
+        <li><a href="./funcAction?tag=exit">安全退出</a></li>
+    </ul>
+</div>
+<div class="admincenter">
+    <div class="adminNavigation sidebar">
+        <dl>
+            <dd>
+                <div class="title"><a id="system" href="<?php  echo site_url('background/user_operate/display');?>" >用户管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/order_operate/display');?>">订单管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/machine/display');?>" >净水机型号管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/filter/display');?>" >净水机滤芯管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/article/display');?>" >文章管理</a></div>
+            </dd>
+        </dl>
+    </div>
+    <!--<div class="admintable">-->
+    <div class="adminTableCen">
+        <div class="admintable">
+            <table class="dateTable" id="check">
+                <tr>
+                    <td><label>文章标题</label></td>
+                    <td><?= $result->articlename?></td>
+                </tr>
+                <tr>
+                    <td><label>文章更新时间</label></td>
+                    <td><?= $result->updatetime?></td>
+                </tr>
+                <tr>
+                    <td><label>缩略图</label></td>
+                    <td><img src="<?= $result->articleimg?>"style="width: 100px;height: 100px;"></td>
+                </tr>
+                <tr>
+                    <td><label>文章简介</label></td>
+                    <td><?= $result->articleintro?></td>
+                </tr>
+                <tr>
+                    <td><label>文章内容</label></td>
+                    <td style="word-wrap: break-word;padding: 5px 200px 5px 20px;" id="articlecon" ><?= $result->articlecontent?></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <a class="btn btn-warning" href="<?php echo site_url('background/article/preview/' . $result->articleid)?>" target="_blank" style="width: 100px;margin-left: 30px;">文章预览</a>
+                        <button class="btn btn-warning"  style="width: 100px;margin-left: 30px;" onclick="window.history.back();">返回</button>
+                    </td>
+                </tr>
+            </table>
+            </form>
+        </div>
+    </div>
+    <!--<div class="adminbm">版权所有Copyright © 2017 All Rights Reserved. 灵山乐嘉教育有限公司</div>-->
+</body>
+</html>

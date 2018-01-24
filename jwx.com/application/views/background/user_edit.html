@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<head>
+    <title>编辑用户资料</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="<?php echo base_url('css/user_edit.css')?>">
+    <script type="text/javascript" src="<?php echo base_url('js/jquery-3.2.0.js')?>"></script>
+    <link rel="stylesheet" href="<?php echo base_url('css/bootstrap.css')?>">
+    <script type="text/javascript" src="<?php echo base_url('js/formcheck.js')?>"></script>
+
+</head>
+<body>
+<script>
+    window.onload = function()
+    {
+        $("#reset").click(function ()
+        {
+           $("#passwd").css("display","block");
+           $(this).css("display","none");
+           $("#passwd").val("");
+           $(document).ready(function(){ $("#passwd").focus();});
+        });
+
+        formblur("telnum","(value.length>0 && value.length != 11) || patrn.exec(value) == null");
+        formblur("passwd","psw.exec(value) == null || value.length==0");
+        formblur("username","value.length==0");
+        formblur("address","value.length==0");
+        $("#passwd").blur(function()
+        {
+            if($.trim($(this).val()).length==0)
+            {
+                $("#passwderror").css("display","block");
+            }
+        });
+
+        $("#formsubmit").submit(function()
+        {
+            var err1 = $("#telnumerror").css("display");
+            var err2 = $("#passwderror").css("display");
+            var err3 = $("#usernameerror").css("display");
+            var err4 = $("#addresserror").css("display");
+            if(err1=="block"||err2=="block"||err3=="block"||err4=="block")
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        });
+
+    }
+
+</script>
+<div class="admintop">
+    <span><img src="<?php echo base_url('images/login/Hunsdon.png')?>" alt="logo" width="60%" height="60%"></span>
+    <ul>
+        <li><a href="./funcAction?tag=update&people=${sessionScope.username}">欢迎你,admin</a></li>
+        <li><a href="./funcAction?tag=exit">安全退出</a></li>
+    </ul>
+</div>
+<div class="admincenter">
+    <div class="adminNavigation sidebar">
+        <dl>
+            <dd>
+                <div class="title"><a id="system" href="<?php  echo site_url('background/user_operate/display');?>" >用户管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/order_operate/display');?>">订单管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/machine/display');?>" >净水机型号管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/filter/display');?>" >净水机滤芯管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/article/display');?>" >文章管理</a></div>
+            </dd>
+        </dl>
+    </div>
+    <!--<div class="admintable">-->
+    <div class="adminTableCen">
+        <div class="admintable">
+            <form action="<?php echo site_url('background/user_operate/edit_user/'."$segment");?>" method="post" id="formsubmit" >
+                <table class="dateTable" id="check">
+                    <tr>
+                        <td><label>电话号码</label></td>
+                        <td>
+                            <input type="text" name="telnum" value="<?php echo  $user[0]['telnum']?>" id="telnum">
+                            <span id="telnumerror" class="err" style="display: none;">电话号码正确格式为：长度为11位，只能为数字</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>密码</label></td>
+                        <td>
+                            <div id="reset" class="btn-warning pwdreset">修改密码</div>
+                            <input type="password" name="passwd" id="passwd" style="display:none;" value="<?php echo  $user[0]['passwd']?>">
+                            <span id="passwderror" class="err" style="display: none;">密码正确格式为：以字母开头，长度在6-18之间，只能包含字母、数字和下划线</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>用户名</label></td>
+                        <td>
+                            <input type="text" name="username" id="username" value="<?php echo  $user[0]['username']?>">
+                            <span id="usernameerror" class="err" style="display: none;">用户名不得为空</span>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td><label>性别</label></td>
+                        <td>
+                            <input type="radio" name="genderid" value="2" checked>男
+                            <input type="radio" name="genderid" value="3">女
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>地址</label></td>
+                        <td>
+                            <!--<input type="text" name="address" value="<?php echo  $user[0]['address']?>">-->
+                            <textarea type="text" name="address" id="address" cols="50" rows="2"><?php echo  $user[0]['address']?></textarea>
+                            <span id="addresserror" class="err" style="display: none;">地址不得为空</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>备注</label></td>
+                        <td>
+                            <textarea type="text" name="remark"  cols="50" rows="6"><?php echo  $user[0]['remark']?></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <input type="hidden" name="userid" value="<?php echo  $user[0]['userid']?>">
+                        <td></td>
+                        <td ><input type="submit" value="提交"></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+

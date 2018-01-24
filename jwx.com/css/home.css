@@ -1,0 +1,51 @@
+@charset "utf-8";
+/*初始化*/
+body,div,p,h3,ul,li,input,img{margin:0;padding:0;color:#000;font-size:15px;font-family: serif; }
+img{border:0 none;}
+/*input{border:0 none;outline-style: none;}*/
+a{text-decoration: none;color:#000;}
+a:hover,a:active{text-decoration: none;color: #8F8C8F;}
+li{list-style: none;}
+
+
+/*header*/
+.header{text-align: center;height: 50px;line-height: 50px;background: #F8F8F8;overflow: hidden;}
+.head  span,.header  a{color: #000;font-size:20px;font-weight: bold;}
+.head  a{float: left;}
+
+/*个人信息*/
+.personinfo{ margin-top: 20px;text-align: center;}
+/*.infotable tbody tr {border: 1px solid transparent !important;margin: 10px 0;border-bottom: 1px solid #000;}*/
+.infoimg{margin-right: 10px;border:solid 1px #BBBBBB;}
+
+/*grade*/
+/*.grade{margin-left: 5%;}*/
+.grade div{text-align: center;}
+.grade a{border-bottom:#BBBBBB 1px solid;font-size: 18px;}
+/*折线图*/
+#content { background: #ddd;}
+path {fill: none;  stroke: #4682B4;  stroke-width: 2;}
+text {fill: #000; font-size: 25px;font-weight: bold;  }
+.domain, .tick line {  stroke: gray;  }
+.svg-container {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%; /* aspect ratio */
+    vertical-align: top;
+    overflow: hidden;
+}
+.svg-content-responsive {
+    display: inline-block;
+    position: absolute;
+    top: 5px;
+    left:0;
+}
+
+
+/*考勤表*/
+.check{text-align: center;margin-top: 30px;margin-bottom: 30px;}
+.check a{border-bottom:#BBBBBB 1px solid;font-size: 18px;}
+.calendar table{width:80%;text-align: center;color: #7590B9;}
+.calendar table thead{border-bottom: 2px solid #D81B60;}
+.now{background-color:#ed7166; color:#fff;}

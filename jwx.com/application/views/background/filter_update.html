@@ -1,0 +1,104 @@
+<?php
+    life();
+?>
+<!DOCTYPE HTML>
+<head>
+    <title>修改滤芯</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="<?php echo base_url('css/user_edit.css')?>">
+    <script type="text/javascript" src="<?php echo base_url('js/jquery-3.2.0.js')?>"></script>
+    <link rel="stylesheet" href="<?php echo base_url('css/bootstrap.css')?>">
+    <script type="text/javascript" src="<?php echo base_url('js/formcheck.js')?>"></script>
+    <script type="text/javascript" src="<?php echo base_url('js/checkexist.js')?>"></script>
+
+</head>
+<body>
+<script>
+    window.onload = function ()
+    {
+        //       ""里填写希望请求的 URL
+        checkexist2("updatetype","../../../filter/update_unique");
+        formblur("updatetype","value.length<2 || value.length>20");
+        formblur("updatelife","(patrn.exec(value) == null) || (value.length<2 || value.length>20) || parseInt(value)<0");
+
+        $("#formsubmit").submit(function()
+        {
+            isempty("updatetype");
+            isempty("updatelife");
+            aftersubmit("updatetype","v.length<2 || v.length>20");
+            aftersubmit("updatelife","patrn.exec(v) == null || v.length<2 || v.length>20 || parseInt(v)<0 ");
+            var err1 = $("#updatetypeerror").css("display");
+            var err2 = $("#updatelifeerror").css("display");
+            if(err1=="block"||err2=="block")
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        });
+    }
+</script>
+
+<div class="admintop">
+    <span><img src="<?php echo base_url('images/login/Hunsdon.png')?>" alt="logo" width="60%" height="60%"></span>
+    <ul>
+        <li><a href="./funcAction?tag=update&people=${sessionScope.username}">欢迎你,admin</a></li>
+        <li><a href="./funcAction?tag=exit">安全退出</a></li>
+    </ul>
+</div>
+<div class="admincenter">
+    <div class="adminNavigation sidebar">
+        <dl>
+            <dd>
+                <div class="title"><a id="system" href="<?php  echo site_url('background/user_operate/display');?>" >用户管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/order_operate/display');?>">订单管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/machine/display');?>" >净水机型号管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/filter/display');?>" >净水机滤芯管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/article/display');?>" >文章管理</a></div>
+            </dd>
+        </dl>
+    </div>
+    <!--<div class="admintable">-->
+    <div class="adminTableCen">
+        <div class="admintable">
+            <form action="<?php echo  site_url('background/filter/update/' . $row->filterid . '/' . $segment);?>" method="post"  id="formsubmit">
+                <table class="dateTable" id="check">
+                    <tr>
+                        <td><label>滤芯名</label></td>
+                        <td>
+                            <input type="text" name="updatetype" id="updatetype" value="<?php echo (set_value('updatetype') != '') ? set_value('updatetype') : $row->filtername?>">
+                            <?php echo form_error('updatetype')?>
+                            <span id="updatetypeerror" style="display: none;">滤芯名正确格式为：长度大于2，小于20</span>
+                            <span id="inexistence" style="display: none;">这个滤芯名已存在</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>滤芯寿命</label></td>
+                        <td>
+                            <input type="text" name="updatelife" id="updatelife" value="<?php echo (set_value('updatelife') != '') ? set_value('updatelife') : $row->life?>">&nbsp;(单位：天）
+                            <?php echo form_error('updatelife')?>
+                            <span id="updatelifeerror" style="display: none;">滤芯寿命正确格式为:只能为数字,长度大于2，小于20</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="submit" value="提交"></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+    <!--<div class="adminbm">版权所有Copyright © 2017 All Rights Reserved. 灵山乐嘉教育有限公司</div>-->
+</body>
+</html>
+

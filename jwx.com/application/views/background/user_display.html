@@ -1,0 +1,103 @@
+<!DOCTYPE HTML>
+<head>
+    <title>用户管理</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="<?php echo base_url('css/check_display.css')?>">
+    <script type="text/javascript" src="<?php echo base_url('js/jquery-3.2.0.js')?>"></script>
+    <link rel="stylesheet" href="<?php echo base_url('css/bootstrap.css')?>">
+
+</head>
+<body>
+<div class="admintop">
+    <span><img src="<?php echo base_url('images/login/Hunsdon.png')?>" alt="logo" width="60%" height="60%"></span>
+    <ul>
+        <li><a href="#">欢迎你,admin</a></li>
+        <li><a href="<?php echo site_url('background/quit');?>">安全退出</a></li>
+    </ul>
+</div>
+<div class="admincenter">
+    <div class="adminNavigation sidebar">
+        <div class="adminNavigation">
+            <dl>
+                <dd>
+                    <div class="title"><a id="system" href="<?php  echo site_url('background/user_operate/display');?>" >用户管理</a></div>
+                </dd>
+                <dd>
+                    <div class="title"><a href="<?php  echo site_url('background/order_operate/display');?>">订单管理</a></div>
+                </dd>
+                <dd>
+                    <div class="title"><a href="<?php  echo site_url('background/machine/display');?>" >净水机型号管理</a></div>
+                </dd>
+                <dd>
+                    <div class="title"><a href="<?php  echo site_url('background/filter/display');?>" >净水机滤芯管理</a></div>
+                </dd>
+                <dd>
+                    <div class="title"><a href="<?php  echo site_url('background/article/display');?>" >文章管理</a></div>
+                </dd>
+            </dl>
+        </div>
+    </div>
+    <div class="admintable">
+        <div class="operate_top">
+            <a class="btn btn-warning" href="<?php  echo site_url('background/user_skip/user_login');?>">添加用户</a>
+        </div>
+        <table class="dateTable user">
+            <thead>
+            <tr>
+                <td>id号</td>
+                <td>注册时间</td>
+                <td>名字</td>
+                <td>电话</td>
+                <td>性别</td>
+                <td>住址</td>
+                <td>操作</td>
+            </tr>
+            </thead>
+            <tbody>
+            <?php foreach($user as $u):?>
+            <tr >
+                <td><?php echo $u['userid'];?></td>
+                <td>
+                    <?php
+                                    $time = $u['createtime'];
+                                    $datestring = '%Y-%m-%d';
+                                    echo mdate($datestring, $time);
+                                ?>
+                </td>
+                <td><?php echo $u['username'];?></td>
+                <td><?php echo $u['telnum'];?></td>
+                <td><?php
+                                    if($u['genderid'] == 1)
+                                    {
+                                        echo '未知';
+                                    }
+                                    else if($u['genderid'] == 2)
+                                    {
+                                        echo '男';
+                                    }
+                                    else
+                                    {
+                                        echo '女';
+                                    }
+                                ?>
+                </td>
+                <td><?php echo $u['address'];?></td>
+                <td>
+                    <a href="<?php echo  site_url('background/user_skip/user_edit/'.$u['userid'].'/'. $this->uri->segment(4 , 0));?>">编辑</a>
+                    <a href="<?php echo  site_url('background/user_operate/user_del/'.$u['userid'].'/'. $this->uri->segment(4 , 0));?>" onclick= "return confirm('是否确定删除?');">删除</a>
+                </td>
+            </tr>
+            <?php endforeach;?>
+            </tbody>
+        </table>
+        <div class="operate">
+            <div class="link">
+                <?php   echo $links;?>
+            </div>
+        </div>
+    </div>
+</div>
+<!--<div class="adminbm">版权所有Copyright © 2017 All Rights Reserved. 灵山乐嘉教育有限公司</div>-->
+</body>
+</html>
+

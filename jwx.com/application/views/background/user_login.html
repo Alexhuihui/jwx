@@ -1,0 +1,161 @@
+<!DOCTYPE HTML>
+<head>
+    <title>添加用户</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" href="<?php echo base_url('css/user_edit.css')?>">
+    <script type="text/javascript" src="<?php echo base_url('js/jquery-3.2.0.js')?>"></script>
+    <link rel="stylesheet" href="<?php echo base_url('css/bootstrap.css')?>">
+    <script type="text/javascript" src="<?php echo base_url('js/formcheck.js')?>"></script>
+</head>
+<body>
+<script>
+
+    function checkexist()
+    {
+        var telnumdata = $.trim($("#telnum").val());
+        console.log(telnum);
+        var telnum={"telnum":telnumdata};
+//       ""里填写希望请求的 URL
+        $.post("../../background/order_operate/check_tel",telnum,function (data)
+        {
+
+            var json = JSON.parse(data);
+            var flag = json[0].exist;
+            console.log("flag"+flag);
+
+            for(var i=0;i<data.length;i++)
+            {
+                if(flag==1)
+                {
+                    $("#inexistence").css("display","block");
+                }
+                else
+                {
+                    $("#inexistence").css("display","none");
+                }
+            }
+        });
+
+    }
+    window.onload = function ()
+    {
+        formblur("telnum","(value.length>0 && value.length != 11) || patrn.exec(value) == null");
+        formblur("passwd","psw.exec(value) == null");
+        formblur("username","value.length==0");
+        formblur("address","value.length==0");
+
+        $("#formsubmit").submit(function()
+        {
+            isempty("telnum");
+            isempty("passwd");
+            isempty("username");
+            isempty("address");
+            aftersubmit("telnum","(v.length>0 && v.length != 11) || patrn.exec(v) == null")
+            aftersubmit("passwd","psw.exec(v) == null");
+            var err1 = $("#telnumerror").css("display");
+            var err2 = $("#passwderror").css("display");
+            var err3 = $("#usernameerror").css("display");
+            var err4 = $("#addresserror").css("display");
+            if(err1=="block"||err2=="block"||err3=="block"||err4=="block")
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        });
+    }
+</script>
+
+<div class="admintop">
+    <span><img src="<?php echo base_url('images/login/Hunsdon.png')?>" alt="logo" width="60%" height="60%"></span>
+    <ul>
+        <li><a href="#">欢迎你,admin</a></li>
+        <li><a href="<?php echo site_url('background/quit');?>">安全退出</a></li>
+    </ul>
+</div>
+<div class="admincenter">
+    <div class="adminNavigation sidebar">
+        <dl>
+            <dd>
+                <div class="title"><a id="system" href="<?php  echo site_url('background/user_operate/display');?>" >用户管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/order_operate/display');?>">订单管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/machine/display');?>" >净水机型号管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/filter/display');?>" >净水机滤芯管理</a></div>
+            </dd>
+            <dd>
+                <div class="title"><a href="<?php  echo site_url('background/article/display');?>" >文章管理</a></div>
+            </dd>
+        </dl>
+    </div>
+    <!--<div class="admintable">-->
+    <div class="adminTableCen">
+        <div class="admintable">
+            <form action="<?php echo  site_url('background/user_operate/insert_user');?>" method="post" id="formsubmit">
+                <table class="dateTable" id="check">
+                    <tr>
+                        <td><label>电话号码</label></td>
+                        <td>
+                            <input type="text" name="telnum" id="telnum" value="<?php   echo set_value('telnum');?>" oninput="checkexist();"">
+                            <span id="telnumerror" class="err" style="display: none;">电话号码正确格式为：长度为11位，只能为数字</span>
+                            <span id="inexistence" style="display: none;">这个电话号码已存在</span>
+                            <?php   echo form_error('telnum', '<span>', '</span>');?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>密码</label></td>
+                        <td><input type="password" name="passwd" id="passwd">
+                            <span id="passwderror" class="err" style="display: none;">密码正确格式为：以字母开头，长度在6-18之间，只能包含字母、数字和下划线</span>
+                            <?php   echo form_error('passwd', '<span>', '</span>');?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>用户名</label></td>
+                        <td>
+                            <input type="text" name="username" id="username" value="<?php echo set_value('username');?>">
+                            <?php   echo form_error('username', '<span>', '</span>');?>
+                            <span id="usernameerror" class="err" style="display: none;">用户名不得为空</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>性别</label></td>
+                        <td>
+                            <input type="radio" name="genderid" value="2" checked>男
+                            <input type="radio" name="genderid" value="3">女
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>地址</label></td>
+                        <td>
+                            <!--<input type="text" name="address" value="<?php echo set_value('address');?>">-->
+                            <textarea type="text" name="address" id="address" cols="50" rows="2"><?php echo set_value('address');?></textarea>
+                            <?php   echo form_error('address', '<span>', '</span>');?>
+                            <span id="addresserror" class="err" style="display: none;">地址不得为空</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label>备注</label></td>
+                        <td>
+                            <textarea  type="text" name="remark"  cols="50" rows="6" ><?php echo set_value('remark');?></textarea>
+                            <?php   echo form_error('remark', '<span>', '</span>');?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="submit" value="提交"></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+<!--<div class="adminbm">版权所有Copyright © 2017 All Rights Reserved. 灵山乐嘉教育有限公司</div>-->
+</body>
+</html>
+

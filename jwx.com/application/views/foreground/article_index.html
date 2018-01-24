@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title><?php echo $result->articlename?></title>
+
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=10,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=0,minimal-ui">
+    <link href="images/favicon.gif" rel="icon" type="image/icon">
+    <link rel="stylesheet" href="<?php echo base_url('css/bootstrap.min.css')?>">
+    <link rel="stylesheet" href="<?php echo base_url('css/article_index.css')?>">
+    <script type="text/javascript" src="<?php echo base_url('js/jquery-3.2.0.js')?>"></script>
+    <script type="text/javascript" src="<?php echo base_url('js/bootstrap.js')?>"></script>
+
+</head>
+<body cz-shortcut-listen="true">
+<script>
+    window.onload = function()
+    {
+        $("#articlecon img").addClass("img-responsive");
+    }
+
+</script>
+<div id="editer" class="container main" style="max-width: 640px !important;margin: 0px auto;background-color: #fff !important;overflow: hidden;">
+    <div class="content" >
+        <!-- 标题 -->
+        <h2><?php echo $result->articlename?></h2>
+        <!-- 时间、作者 -->
+        <div class="author">
+            <em ><?php echo $result->updatetime?></em>
+            <em>江西汇沐暖通工程有限公司</em>
+        </div>
+        <div class="articlecon" id="articlecon">
+            <?php echo $result->articlecontent?>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

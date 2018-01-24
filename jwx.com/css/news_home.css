@@ -1,0 +1,26 @@
+@charset "utf-8";
+/*初始化*/
+body,div,p,h3,ul,li,input{margin:0;padding:0;color:#000;font-size:15px;font-family: serif; }
+img{border:0 none;}
+/*input{border:0 none;outline-style: none;}*/
+a{text-decoration: none;color:#000;}
+a:hover,a:active{text-decoration: none;color: #8F8C8F;}
+li{list-style: none;}
+
+/*header*/
+.search_box form{margin-top: 23px;}
+.search_box form input{border-radius: 5px; font-size: 1.2em;height: 35px;}
+.search_box form input[type="text"]{white-space: nowrap;background: url(../images/s.png) no-repeat left center;background-color: #fff;}
+.search_box form input[type="submit"]{border:0 none;outline-style: none;background:url(../images/sea.png) no-repeat center ; background-size:50%;width:60px; height:35px; }
+
+/*轮播图*/
+.carousel-inner .item a>img{height:200px;}
+
+/*container*/
+.news{background-color:#C9D9C3; }
+.content .news h3{font-size:20px; font-weight:bold;}
+.content .news h3,.content .news ul li{text-align: center;color: #B546B8;border-bottom: 1px solid #BBBBBB;padding: 5px 0;overflow: hidden;}
+.content .news ul li a{color: #2B51B8;border-bottom:1px solid #2B51B8; }
+.help div:first-child{border-right:1px #BBBBBB solid; }
+.help div h3{color: #E51C23;text-align: center;padding: 5px 0;font-size: 20px;}
+.help div ul li{border-bottom: 1px solid #BBBBBB;font-size: 16px;overflow: hidden; }
